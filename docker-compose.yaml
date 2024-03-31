@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+    logging-server:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            args:
+                - ENVIRONMENT=local
+        image: logging-server
+        container_name: logging-server
+        ports:
+            - 9513:8080
+        volumes:
+            - ./app:/usr/src/app
+            - app-node-modules:/usr/src/app/node_modules
+            - app-key:/usr/src/app/key
+        oom_kill_disable: true
+        ipc: host
+        tty: true
+
+volumes:
+    app-node-modules:
+    app-key:
